@@ -71,11 +71,7 @@ if (!isset($_SESSION['set'])) {
 $remoteCmd = 'python predictback/test.py '.strval($_SESSION['set']['id']).' '.strval($_SESSION['set']['ind']);
 $localCmd = 'ssh lenovodesktop "'.$remoteCmd.'"';
 $literalCmd = "bash -c 'exec nohup setsid ".$localCmd." > /dev/null 2>&1 &'";
-#echo time();
-#exec($literalCmd);
-#echo time();
-#exec('bash -c "exec nohup setsid your_command > /dev/null 2>&1 &"');
-#exec('nohup ssh -F ../ssh/config lenovodesktop "python predictback/test.py '.strval($_SESSION['set']['id']).' '.strval($setInd).'" </dev/null >/dev/null 2>&1 &');
+exec($literalCmd);
 
 $loadAnimation = !isset($_SESSION['question']);
 
