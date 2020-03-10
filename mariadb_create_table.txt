@@ -1,0 +1,46 @@
+CREATE TABLE sets (
+	id int(10) unsigned NOT NULL AUTO_INCREMENT,
+	timeStart timestamp NOT NULL DEFAULT current_timestamp(),
+	timeEnd timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	session varchar(40) NOT NULL,
+	user varchar(21) DEFAULT NULL,
+	type enum('integer') NOT NULL,
+	setInd int(10) unsigned NOT NULL,
+	setLen int(10) unsigned NOT NULL,
+	choiceLen int(10) unsigned DEFAULT NULL,
+	itemLen int(10) unsigned DEFAULT NULL,
+	itemBits int(10) unsigned DEFAULT NULL,
+	minTime int(10) unsigned DEFAULT NULL,
+	maxTime int(10) unsigned DEFAULT NULL,
+	confirmation enum('none','single','full') DEFAULT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE questions (
+	setID int(10) unsigned NOT NULL,
+	id int(10) unsigned NOT NULL AUTO_INCREMENT,
+	timeStart timestamp NOT NULL DEFAULT current_timestamp(),
+	timeEnd timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	answer int(10) unsigned DEFAULT NULL,
+	setInd int(10) unsigned NOT NULL DEFAULT 0,
+	choiceLen int(10) unsigned NOT NULL,
+	itemLen int(10) unsigned NOT NULL,
+	itemBits int(10) unsigned NOT NULL,
+	minTime int(10) unsigned NOT NULL,
+	maxTime int(10) unsigned NOT NULL,
+	confirmation enum('none','single','full') NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE items (
+	questionID int(10) unsigned NOT NULL,
+	choiceInd int(10) unsigned NOT NULL,
+	itemInd int(10) unsigned NOT NULL,
+	value int(10) unsigned NOT NULL
+);
+
+DELETE FROM sets;
+ALTER TABLE sets AUTO_INCREMENT = 1;
+DELETE FROM questions;
+ALTER TABLE questions AUTO_INCREMENT = 1;
+DELETE FROM items;
