@@ -3,6 +3,13 @@ import numpy as np
 import json
 import os
 
+__location__ = os.path.realpath(
+	os.path.join(
+		os.getcwd(),
+		os.path.dirname(__file__)
+	)
+)
+
 TIMESTEPS = 12
 MAX_CHOICES = 16
 MAX_ITEMS = 1
@@ -11,7 +18,7 @@ MAX_TIME = 8
 INIT_FEATURES = 11
 FEATURES = INIT_FEATURES + MAX_CHOICES * MAX_ITEMS
 
-conn = mysql.connector.connect(**json.load(open('predictback/mysql-credentials.json')))
+conn = mysql.connector.connect(**json.load(open(os.path.join(__location__, 'mysql-credentials.json'))))
 conn.autocommit = True
 cursor = conn.cursor()
 
