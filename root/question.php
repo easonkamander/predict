@@ -38,7 +38,7 @@ if (!isset($_SESSION['set'])) {
 	$_SESSION['set'] = array(
 		'type' => genType(),
 		'ind' => 0,
-		'len' => mt_rand(1, 12),
+		'len' => 12,
 		'choiceLen' => mt_rand(0, 3) > 0 ? genScaledValue($choiceLenScale) : NULL,
 		'itemLen' => mt_rand(0, 3) > 0 ? genScaledValue($itemLenScale) : NULL,
 		'itemBits' => mt_rand(0, 3) > 0 ? genScaledValue($itemBitsScale) : NULL,
