@@ -18,7 +18,7 @@ MAX_TIME = 8
 INIT_FEATURES = 11
 FEATURES = INIT_FEATURES + MAX_CHOICES * MAX_ITEMS
 
-conn = mysql.connector.connect(**json.load(open(os.path.join(__location__, 'mysql-credentials.json'))))
+conn = mysql.connector.connect(**json.load(open(os.path.join(__location__, '../mysql-credentials.json'))))
 conn.autocommit = True
 cursor = conn.cursor()
 
