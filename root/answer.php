@@ -60,7 +60,7 @@ for ($i = 0; $i < count($_SESSION['question']['display']); $i++) {
 
 $choices[$_POST['answer']]['actual'] = true;
 
-$sqlGetPrediction->close();
+#$sqlGetPrediction->close();
 
 $conn->close();
 
