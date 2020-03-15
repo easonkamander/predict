@@ -23,13 +23,25 @@ conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-cr
 conn.autocommit = True
 cursor = conn.cursor()
 
-def getChoice (choiceID):
-	cursor.execute('SELECT num FROM items WHERE choiceID = {0}'.format(choiceID))
-	res = cursor.fetchall()
-	if res == None:
-		return None
-	else:
-		return [i[0] for i in res]
+def getQuestion (questionID):
+	out = np.fill(shape=FEATURES, fill_value=0)
+	# cursor.execute('SELECT id, prediction FROM choices WHERE questionID = {0} and valid'.format(questionID))
+	# choices = cursor.fetchall()
 
-print(getChoice(10))
-print(getChoice(10000))
+	# cursor.execute('SELECT num FROM items WHERE choiceID = {0}'.format(choiceID))
+	# return np.array([i[0] for i in cursor.fetchall()])
+	return out
+
+# for each question
+# time start
+# time end
+# min time
+# max time
+# answer
+# all items and the prediction of all choices
+
+# for the last question
+# total set length
+# current set length
+
+print(getQuestion(None))
