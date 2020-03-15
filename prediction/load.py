@@ -24,7 +24,7 @@ conn.autocommit = True
 cursor = conn.cursor()
 
 def getChoice (choiceID):
-	cursor.execute("SELECT num FROM items WHERE choiceID = ?")
+	cursor.execute('SELECT num FROM items WHERE choiceID = {0}'.format(choiceID))
 	res = cursor.fetchall()
 	if res == None:
 		return None
