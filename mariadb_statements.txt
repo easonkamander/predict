@@ -37,6 +37,7 @@ CREATE TABLE questions (
 CREATE TABLE choices (
 	questionID int(10) unsigned NOT NULL,
 	id int(10) unsigned NOT NULL AUTO_INCREMENT,
+	unique TINYINT(1) unsigned NOT NULL DEFAULT 0,
 	prediction double unsigned,
 	PRIMARY KEY (id)
 );
