@@ -23,9 +23,9 @@ function genConfirmation() {
 	return 'none';
 }
 
-$choiceLenScale = array('min' => 2, 'max' => 16, 'exp' => 0.8, 'none' => 0);
+$choiceLenScale = array('min' => 2, 'max' => 8, 'exp' => 0.8, 'none' => 0);
 $itemLenScale = array('min' => 1, 'max' => 1, 'exp' => 0.5, 'none' => 0);
-$itemBitsScale = array('min' => 4, 'max' => 10, 'exp' => 0.6, 'none' => 0);
+$itemBitsScale = array('min' => 3, 'max' => 10, 'exp' => 0.6, 'none' => 0);
 $minTimeScale = array('min' => 2, 'max' => 8, 'exp' => 0.75, 'none' => 5);
 $maxTimeScale = array('min' => 2, 'max' => 8, 'exp' => 0.8, 'none' => 5);
 
