@@ -45,7 +45,7 @@ CREATE TABLE choices (
 CREATE TABLE items (
 	choiceID int(10) unsigned NOT NULL,
 	id int(10) unsigned NOT NULL AUTO_INCREMENT,
-	value int(10) unsigned NOT NULL,
+	num int(10) unsigned NOT NULL,
 	PRIMARY KEY (id)
 );
 
