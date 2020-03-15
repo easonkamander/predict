@@ -24,7 +24,7 @@ conn.autocommit = True
 cursor = conn.cursor()
 
 def getQuestion (questionID):
-	out = np.fill(shape=FEATURES, fill_value=0)
+	out = np.full(shape=FEATURES, fill_value=0.0)
 	# cursor.execute('SELECT id, prediction FROM choices WHERE questionID = {0} and valid'.format(questionID))
 	# choices = cursor.fetchall()
 
