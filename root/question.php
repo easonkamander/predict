@@ -68,10 +68,10 @@ if (!isset($_SESSION['set'])) {
 	$sqlCreateSet->close();
 }
 
-$remoteCmd = 'python predictback/test.py '.strval($_SESSION['set']['id']).' '.strval($_SESSION['set']['ind']);
-$localCmd = 'ssh lenovodesktop "'.$remoteCmd.'"';
-$literalCmd = "bash -c 'exec nohup setsid ".$localCmd." > /dev/null 2>&1 &'";
-exec($literalCmd);
+// $remoteCmd = 'python predictback/test.py '.strval($_SESSION['set']['id']).' '.strval($_SESSION['set']['ind']);
+// $localCmd = 'ssh lenovodesktop "'.$remoteCmd.'"';
+// $literalCmd = "bash -c 'exec nohup setsid ".$localCmd." > /dev/null 2>&1 &'";
+// exec($literalCmd);
 
 $loadAnimation = !isset($_SESSION['question']);
 
@@ -104,21 +104,29 @@ $sqlCreateQuestion->execute();
 $_SESSION['question']['id'] = $sqlCreateQuestion->insert_id;
 $sqlCreateQuestion->close();
 
-$i = 0;
-while ($i < $_SESSION['question']['choiceLen']) {
+$uniqueChoices = 0;
+
+while ($uniqueChoices < $_SESSION['question']['choiceLen']) {
+	$sqlCreateChoice = $conn->prepare("INSERT INTO choices (questionID) VALUES (?)");
+	$sqlCreateChoice->bind_param(
+		"i",
+		$_SESSION['question']['id']
+	);
+	$sqlCreateChoice->execute();
+	$nextChoiceId = $sqlCreateChoice->insert_id;
+	$sqlCreateChoice->close();
+
 	$choice = array();
 
-	for ($j = 0; $j < $_SESSION['question']['itemLen']; $j++) {
-		$value = mt_rand(0, pow(2, $_SESSION['question']['itemBits']) - 1);
-		array_push($choice, $value);
+	for ($i = 0; $i < $_SESSION['question']['itemLen']; $i++) {
+		$num = mt_rand(0, pow(2, $_SESSION['question']['itemBits']) - 1);
+		array_push($choice, $num);
 
-		$sqlCreateItem = $conn->prepare("INSERT INTO items (questionID, choiceInd, itemInd, value) VALUES (?, ?, ?, ?)");
+		$sqlCreateItem = $conn->prepare("INSERT INTO items (choiceID, num) VALUES (?, ?)");
 		$sqlCreateItem->bind_param(
-			"iiii",
-			$_SESSION['question']['id'],
-			$i,
-			$j,
-			$value
+			"ii",
+			$nextChoiceId,
+			$num
 		);
 		$sqlCreateItem->execute();
 		$sqlCreateItem->close();
@@ -126,7 +134,7 @@ while ($i < $_SESSION['question']['choiceLen']) {
 
 	if (!in_array($choice, $_SESSION['question']['list'])) {
 		array_push($_SESSION['question']['list'], $choice);
-		$i++;
+		$uniqueChoices++;
 	}
 }
 

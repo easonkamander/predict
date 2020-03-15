@@ -37,16 +37,16 @@ $sqlUpdateQuestion->bind_param(
 $sqlUpdateQuestion->execute();
 $sqlUpdateQuestion->close();
 
-$sqlGetPrediction = $conn->prepare("SELECT certainty FROM predictions WHERE setID = ? AND ind = ?");
-$sqlGetPredictionInd = $_SESSION['set']['ind'] - 1;
-$sqlGetPrediction->bind_param(
-	"ii",
-	$_SESSION['set']['id'],
-	$sqlGetPredictionInd
-);
-$sqlGetPrediction->execute();
+// $sqlGetPrediction = $conn->prepare("SELECT certainty FROM predictions WHERE setID = ? AND ind = ?");
+// $sqlGetPredictionInd = $_SESSION['set']['ind'] - 1;
+// $sqlGetPrediction->bind_param(
+// 	"ii",
+// 	$_SESSION['set']['id'],
+// 	$sqlGetPredictionInd
+// );
+// $sqlGetPrediction->execute();
 
-$sqlGetPredictionResult = $sqlGetPrediction->get_result();
+// $sqlGetPredictionResult = $sqlGetPrediction->get_result();
 
 $choices = array();
 

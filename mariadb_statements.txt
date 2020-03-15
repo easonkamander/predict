@@ -34,11 +34,18 @@ CREATE TABLE questions (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE items (
+CREATE TABLE choices (
 	questionID int(10) unsigned NOT NULL,
-	choiceInd int(10) unsigned NOT NULL,
-	itemInd int(10) unsigned NOT NULL,
-	value int(10) unsigned NOT NULL
+	id int(10) unsigned NOT NULL AUTO_INCREMENT,
+	prediction double unsigned,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE items (
+	choiceID int(10) unsigned NOT NULL,
+	id int(10) unsigned NOT NULL AUTO_INCREMENT,
+	value int(10) unsigned NOT NULL,
+	PRIMARY KEY (id)
 );
 
 # Clear Tables
