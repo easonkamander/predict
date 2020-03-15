@@ -27,7 +27,7 @@ def getQuestion (questionID):
 	out = np.full(shape=TOTAL_FEATURES, fill_value=0.0)
 
 	cursor.execute('SELECT timeStart, timeEnd, minTime, maxTime, answer, confirmation FROM questions WHERE id = {0}'.format(questionID))
-	print(curosr.fetchone())
+	print(cursor.fetchone())
 	# cursor.execute('SELECT id, prediction FROM choices WHERE questionID = {0} and valid'.format(questionID))
 	# choices = cursor.fetchall()
 
