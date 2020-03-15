@@ -68,11 +68,6 @@ if (!isset($_SESSION['set'])) {
 	$sqlCreateSet->close();
 }
 
-// $remoteCmd = 'python predictback/test.py '.strval($_SESSION['set']['id']).' '.strval($_SESSION['set']['ind']);
-// $localCmd = 'ssh lenovodesktop "'.$remoteCmd.'"';
-// $literalCmd = "bash -c 'exec nohup setsid ".$localCmd." > /dev/null 2>&1 &'";
-// exec($literalCmd);
-
 $loadAnimation = !isset($_SESSION['question']);
 
 $_SESSION['question'] = array(
@@ -148,6 +143,8 @@ while ($uniqueChoices < $_SESSION['question']['choiceLen']) {
 }
 
 $conn->close();
+
+# trigger prediction request
 
 foreach ($_SESSION['question']['list'] as $choice) {
 	if ($_SESSION['set']['type'] == 'integer') {
