@@ -37,30 +37,28 @@ $sqlUpdateQuestion->bind_param(
 $sqlUpdateQuestion->execute();
 $sqlUpdateQuestion->close();
 
-// $sqlGetPrediction = $conn->prepare("SELECT certainty FROM predictions WHERE setID = ? AND ind = ?");
-// $sqlGetPredictionInd = $_SESSION['set']['ind'] - 1;
-// $sqlGetPrediction->bind_param(
-// 	"ii",
-// 	$_SESSION['set']['id'],
-// 	$sqlGetPredictionInd
-// );
-// $sqlGetPrediction->execute();
+$sqlGetPrediction = $conn->prepare("SELECT prediction FROM choices WHERE questionID = ? AND valid");
+$sqlGetPrediction->bind_param(
+	"i",
+	$_SESSION['question']['id']
+);
+$sqlGetPrediction->execute();
 
-// $sqlGetPredictionResult = $sqlGetPrediction->get_result();
+$sqlGetPredictionResult = $sqlGetPrediction->get_result();
 
 $choices = array();
 
 for ($i = 0; $i < count($_SESSION['question']['display']); $i++) {
 	array_push($choices, array(
 		'display' => $_SESSION['question']['display'][$i],
-		'prediction' => 0, # $sqlGetPredictionResult->fetch_assoc()['certainty'],
+		'prediction' => $sqlGetPredictionResult->fetch_assoc()['prediction'],
 		'actual' => false
 	));
 }
 
 $choices[$_POST['answer']]['actual'] = true;
 
-#$sqlGetPrediction->close();
+$sqlGetPrediction->close();
 
 $conn->close();
 
