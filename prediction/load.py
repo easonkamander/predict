@@ -23,10 +23,13 @@ conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-cr
 conn.autocommit = True
 cursor = conn.cursor()
 
-def getItem (itemID):
-	cursor.execute("SELECT num FROM items WHERE id = "+str(itemID))
-	rawResult = cursor.fetchone()
-	return rawResult[0] if rawResult != None else None
+def getChoice (choiceID):
+	cursor.execute("SELECT num FROM items WHERE choiceID = ?")
+	res = cursor.fetchall()
+	if res == None:
+		return None
+	else:
+		return [i[0] for i in res]
 
-print(getItem(10))
-print(getItem(10000))
+print(getChoice(10))
+print(getChoice(10000))
