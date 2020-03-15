@@ -53,7 +53,7 @@ $choices = array();
 for ($i = 0; $i < count($_SESSION['question']['display']); $i++) {
 	array_push($choices, array(
 		'display' => $_SESSION['question']['display'][$i],
-		'prediction' => $sqlGetPredictionResult->fetch_assoc()['certainty'],
+		'prediction' => 0, # $sqlGetPredictionResult->fetch_assoc()['certainty'],
 		'actual' => false
 	));
 }
