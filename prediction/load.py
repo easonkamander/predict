@@ -25,7 +25,8 @@ cursor = conn.cursor()
 
 def getItem (itemID):
 	cursor.execute("SELECT num FROM items WHERE id = "+str(itemID))
-	return cursor.fetchone()[0]
+	rawResult = cursor.fetchone()
+	return rawResult[0] if rawResult != None else None
 
 print(getItem(10))
 print(getItem(10000))
