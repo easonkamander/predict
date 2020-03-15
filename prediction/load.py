@@ -11,20 +11,23 @@ location = os.path.realpath(
 	)
 )
 
-TIMESTEPS = 12
+MAX_QUESTIONS = 12
 MAX_CHOICES = 8
-MAX_ITEMS = 3
+MAX_ITEMS = 2
 MAX_ITEM_BITS = 10
 MAX_TIME = 8
-INIT_FEATURES = 11
-FEATURES = INIT_FEATURES + MAX_CHOICES * MAX_ITEMS
+INIT_FEATURES = 6
+TOTAL_FEATURES = INIT_FEATURES + MAX_CHOICES * (MAX_ITEMS + 1)
 
 conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-credentials.json'))))
 conn.autocommit = True
 cursor = conn.cursor()
 
 def getQuestion (questionID):
-	out = np.full(shape=FEATURES, fill_value=0.0)
+	out = np.full(shape=TOTAL_FEATURES, fill_value=0.0)
+
+	cursor.execute('SELECT timeStart, timeEnd, minTime, maxTime, answer, confirmation FROM questions WHERE id = {0}'.format(questionID))
+	print(curosr.fetchone())
 	# cursor.execute('SELECT id, prediction FROM choices WHERE questionID = {0} and valid'.format(questionID))
 	# choices = cursor.fetchall()
 
@@ -38,10 +41,11 @@ def getQuestion (questionID):
 # min time
 # max time
 # answer
+# confirmation
 # all items and the prediction of all choices
 
 # for the last question
 # total set length
 # current set length
 
-print(getQuestion(None))
+print(getQuestion(17))
