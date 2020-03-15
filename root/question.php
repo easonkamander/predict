@@ -134,6 +134,15 @@ while ($uniqueChoices < $_SESSION['question']['choiceLen']) {
 
 	if (!in_array($choice, $_SESSION['question']['list'])) {
 		array_push($_SESSION['question']['list'], $choice);
+		
+		$sqlConfirmChoice = $conn->prepare("UPDATE choices SET unique = 1 WHERE id = ?");
+		$sqlConfirmChoice->bind_param(
+			"i",
+			$nextChoiceId
+		);
+		$sqlConfirmChoice->execute();
+		$sqlConfirmChoice->close();
+
 		$uniqueChoices++;
 	}
 }
