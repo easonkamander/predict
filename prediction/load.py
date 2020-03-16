@@ -13,7 +13,7 @@ location = os.path.realpath(
 
 MAX_QUESTIONS = 12
 MAX_CHOICES = 8
-MAX_ITEMS = 2
+MAX_ITEMS = 1
 MAX_ITEM_BITS = 10
 MAX_TIME = 8
 META_FEATURES = 6
@@ -56,13 +56,13 @@ def getBatchX (setID, batchFill):
 
 			for i, choice in enumerate(resChoices):
 				if choice[1] != None:
-					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_CHOICES + 1)] = choice[1]
+					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_ITEMS + 1)] = choice[1]
 
 				cursor.execute('SELECT num FROM items WHERE choiceID = {0}'.format(choice[0]))
 				resItems = cursor.fetchall()
 
 				for j, item in enumerate(resItems):
-					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_CHOICES + 1) + j + 1] = (item[0] + 1) / 2 ** MAX_ITEM_BITS
+					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_ITEMS + 1) + j + 1] = (item[0] + 1) / 2 ** MAX_ITEM_BITS
 
 	return out
 
