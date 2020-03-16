@@ -64,6 +64,8 @@ def getBatchX (setID, batchFill):
 				for j, item in enumerate(resItems):
 					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_ITEMS + 1) + j + 1] = (item[0] + 1) / 2 ** MAX_ITEM_BITS
 
+			timeFrame = resMeta[1].timestamp()
+
 	return out
 
 # for each question
