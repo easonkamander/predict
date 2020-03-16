@@ -79,4 +79,9 @@ def getBatchX (setID, batchFill):
 # total set length
 # current set length
 
-print(getQuestion(17))
+print(getBatchX(3, 1))
+print(getBatchX(3, 1)[0])
+print(getBatchX(3, 9))
+print(getBatchX(3, 9)[0])
+print(getBatchX(3, 10))
+print(getBatchX(3, 10)[0])
