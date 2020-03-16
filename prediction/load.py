@@ -21,8 +21,11 @@ META_FEATURES = 6
 TOTAL_FEATURES = META_FEATURES + MAX_CHOICES * (MAX_ITEMS + 1)
 
 conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-credentials.json'))))
-conn.autocommit = True
+# conn.autocommit = True
 cursor = conn.cursor()
+
+def refresh ():
+	conn.commit()
 
 def getBatchX (setID, batchFill):
 	out = np.full(shape=(1, MAX_QUESTIONS, TOTAL_FEATURES), fill_value=0.0)
@@ -104,5 +107,6 @@ def getBatchesY ():
 
 	return out
 
-print(getBatchesX())
+print(getBatchesY())
+refresh()
 print(getBatchesY())
