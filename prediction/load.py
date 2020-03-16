@@ -2,6 +2,7 @@ import mysql.connector
 import numpy as np
 import json
 import os
+import datetime
 
 location = os.path.realpath(
 	os.path.join(
@@ -39,7 +40,7 @@ def getBatchX (setID, batchFill):
 			if timeFrame:
 				out[0, MAX_QUESTIONS - batchFill + setInd, 0] = 2 * np.arctan(resMeta[0].timestamp() - timeFrame) / np.pi
 			else:
-				out[0, MAX_QUESTIONS - batchFill + setInd, 0] = -1 # (resMeta[0].timestamp() - resMeta[0].timestamp().replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds() / 86400
+				out[0, MAX_QUESTIONS - batchFill + setInd, 0] = (resMeta[0] - datetime.datetime.combine(resMeta[0].date(), datetime.time.min)).total_seconds()
 
 			out[0, MAX_QUESTIONS - batchFill + setInd, 1] = 2 * np.arctan(resMeta[1].timestamp() - resMeta[0].timestamp()) / np.pi
 			out[0, MAX_QUESTIONS - batchFill + setInd, 2] = (resMeta[2] + 1) / MAX_TIME
