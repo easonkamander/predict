@@ -69,22 +69,41 @@ def getBatchX (setID, batchFill):
 
 	return out
 
-# for each question
-# time start
-# time end
-# min time
-# max time
-# confirmation
-# answer
-# all items and the prediction of all choices
+def getBatchY (setID, batchFill):
+	out = np.full(shape=(1, MAX_CHOICES), fill_value=0.0)
 
-# for the last question
-# total set length
-# current set length
+	cursor.execute('SELECT answer FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, batchFill - 1))
+	answer = cursor.fetchone()[0]
+	if answer is not None:
+		out[0, answer] = 1.0
 
-print(getBatchX(4, 1)[0])
-print(getBatchX(4, 1)[0][-1])
-print(getBatchX(4, 4)[0])
-print(getBatchX(4, 4)[0][-1])
-print(getBatchX(4, 5)[0])
-print(getBatchX(4, 5)[0][-1])
+	return out
+
+def getBatchesX ():
+	out = np.empty(shape=(0, MAX_QUESTIONS, TOTAL_FEATURES))
+
+	cursor.execute("SELECT id, setLen FROM sets WHERE setInd = setLen")
+	sets = cursor.fetchall()
+
+	print(i)
+
+	for i in sets:
+		for j in range(i[1]):
+			out = np.concatenate((out, getBatchX(i[0], j + 1)))
+
+	return out
+
+def getBatchesY ():
+	out = np.empty(shape=(0, MAX_CHOICES))
+
+	cursor.execute("SELECT id, setLen FROM sets WHERE setInd = setLen")
+	sets = cursor.fetchall()
+
+	for i in sets:
+		for j in range(i[1]):
+			out = np.concatenate((out, getBatchY(i[0], j + 1)))
+
+	return out
+
+print(getBatchesX())
+print(getBatchesY())
