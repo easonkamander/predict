@@ -85,10 +85,9 @@ def getBatchesX ():
 	cursor.execute("SELECT id, setLen FROM sets WHERE setInd = setLen")
 	sets = cursor.fetchall()
 
-	print(i)
-
 	for i in sets:
 		for j in range(i[1]):
+			print(i, j)
 			out = np.concatenate((out, getBatchX(i[0], j + 1)))
 
 	return out
