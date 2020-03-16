@@ -62,7 +62,7 @@ def getBatchX (setID, batchFill):
 				resItems = cursor.fetchall()
 
 				for j, item in enumerate(resItems):
-					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_CHOICES + 1) + j + 1] = (item[1] + 1) / 2 ** MAX_ITEM_BITS
+					out[0, MAX_QUESTIONS - batchFill + setInd, META_FEATURES + i * (MAX_CHOICES + 1) + j + 1] = (item[0] + 1) / 2 ** MAX_ITEM_BITS
 
 	return out
 
