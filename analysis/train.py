@@ -1,9 +1,6 @@
 import numpy as np
 import load
 
-import plaidml.keras
-plaidml.keras.install_backend()
-
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM, Flatten, Activation
 from keras.optimizers import Adam
