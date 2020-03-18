@@ -106,7 +106,3 @@ def getBatchesY ():
 			out = np.concatenate((out, getBatchY(i[0], j + 1)))
 
 	return out
-
-print(getBatchesY())
-refresh()
-print(getBatchesY())

@@ -1,9 +1,11 @@
 import numpy as np
 import load
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, LSTM, Flatten, Activation
-from keras.optimizers import Adam
+import tensorflow as tf
+
+# from keras.models import Sequential
+# from keras.layers import Dense, Dropout, LSTM, Flatten, Activation
+# from keras.optimizers import Adam
 
 print('Loading...', end='')
 
@@ -27,20 +29,18 @@ print('\rLoading...Done')
 
 print(trainY)
 
-model = Sequential()
-model.add(LSTM(20, input_shape=(load.TIMESTEPS, load.FEATURES)))
-model.add(Dense(100))
-model.add(Dropout(0.2))
-model.add(Dense(50))
-model.add(Dropout(0.2))
-model.add(Dense(25))
-model.add(Dropout(0.2))
-model.add(Dense(load.MAX_CHOICES, activation='sigmoid'))
+model = tf.keras.Sequential()
+model.add(tf.keras.LSTM(20, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES)))
+model.add(tf.keras.Dense(100))
+model.add(tf.keras.Dropout(0.2))
+model.add(tf.keras.Dense(50))
+model.add(tf.keras.Dropout(0.2))
+model.add(tf.keras.Dense(25))
+model.add(tf.keras.Dropout(0.2))
+model.add(tf.keras.Dense(load.MAX_CHOICES, activation='sigmoid'))
 
 print(model.summary())
 
 model.compile(loss='mse', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=200, validation_data=(checkX, checkY), shuffle=True)
-
-model.save('predictback/model.h5')
