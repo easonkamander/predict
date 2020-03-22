@@ -34,4 +34,4 @@ model.compile(loss='mse', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=2, validation_data=(checkX, checkY), shuffle=True)
 
-print(model.predict(checkX[-1]))
+print(model.predict(checkX[-1:]))
