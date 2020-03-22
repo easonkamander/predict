@@ -1,7 +1,7 @@
-import zerorpc
-import sys
+import numpy as np
+import load
+import tensorflow as tf
 
-if len(sys.argv) == 3 and sys.argv[1].isnumeric() and sys.argv[2].isnumeric():
-	client = zerorpc.Client()
-	client.connect("tcp://127.0.0.1:4343")
-	client.get(int(sys.argv[1]), int(sys.argv[2]))
+model = tf.keras.models.load_model('model.h5')
+
+print(model.predict(load.getBatchX(10, 1)))
