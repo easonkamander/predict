@@ -5,7 +5,7 @@ $context = stream_context_create(array('http' => array(
 	'header' => "Content-Type: text/xml",
 	'content' => $request
 )));
-$file = file_get_contents("http://localhost/RPC2", false, $context);
+$file = file_get_contents("/RPC2", false, $context);
 $response = xmlrpc_decode($file);
 if ($response && xmlrpc_is_fault($response)) {
 	trigger_error("xmlrpc: $response[faultString] ($response[faultCode])");
