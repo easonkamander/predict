@@ -1,7 +1,4 @@
-import numpy as np
-import load
-import tensorflow as tf
+import xmlrpc.client
 
-model = tf.keras.models.load_model('model.h5')
-
-print(model.predict(load.getBatchX(10, 1)))
+s = xmlrpc.client.ServerProxy('http://localhost:8000')
+print(s.add(2,3))

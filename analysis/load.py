@@ -82,6 +82,13 @@ def getBatchY (setID, batchFill):
 
 	return out
 
+def setBatchY (setID, batchFill, batchY):
+	cursor.execute('SELECT id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, batchFill))
+	questionID = cursor.fetchone()[0]
+
+	for i, j in enumerate(batchY):
+		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND valid LIMIT {2}, 1'.format(j, questionID, i))
+
 def getBatchesX ():
 	out = np.empty(shape=(0, MAX_QUESTIONS, TOTAL_FEATURES))
 

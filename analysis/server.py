@@ -1,36 +1,23 @@
-import load
-import json
+import numpy as np
+# import load
+# import tensorflow as tf
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-import mysql.connector
+# model = tf.keras.models.load_model('model.h5')
 
-import plaidml.keras
-plaidml.keras.install_backend()
+with SimpleXMLRPCServer(('localhost', 8000)) as server:
+	# def analyze (setID, batchFill):
+	# 	load.refresh()
+	# 	batchX = load.getBatchX(setID, batchFill)
+	# 	if batchX is not None:
+	# 		batchY = model.predict(batchX)
+	# 		load.setBatchY(setID, batchFill, batchY)
+	# server.register_function(analyze, 'analyze')
 
-from keras.models import load_model
-model = load_model('predictback/model.h5')
+	def method (a, b, c):
+		print(a, b, c)
+		return 'aaaaaaaa'
+	server.register_function(method, 'method')
 
-import zerorpc
-
-conn = mysql.connector.connect(**json.load(open('predictback/mysql-credentials.json')))
-conn.autocommit = True
-cursor = conn.cursor()
-
-class RPCServer (object):
-	def get (self, setID, ind):
-		setID = int(setID)
-		ind = int(ind)
-		print(setID, ind)
-		batch = load.getBatchX(setID, ind)
-		if batch is not None:
-			cursor.execute('SELECT COUNT(choice) FROM predictions WHERE setID = '+str(setID)+' AND ind = '+str(ind))
-			if cursor.fetchone()[0] == 0:
-				for i, v in enumerate(model.predict(batch)[0]):
-					cursor.execute('INSERT INTO predictions VALUES ('+str(setID)+', '+str(ind)+', '+str(i)+', '+str(v)+')')
-			return 0
-		else:
-			return 1
-
-
-server = zerorpc.Server(RPCServer())
-server.bind('tcp://0.0.0.0:4343')
-server.run()
+	server.serve_forever()
