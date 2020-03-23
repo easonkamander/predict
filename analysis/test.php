@@ -16,5 +16,5 @@ if (curl_errno($ch)) {
 	print curl_error($ch);
 } else {
 	curl_close($ch);
-	return $data;
+	echo $data;
 }
