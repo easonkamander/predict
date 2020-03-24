@@ -78,7 +78,7 @@ unset($_SESSION['question']);
 $setInd = $set['setInd'];
 $setLen = $set['setLen'];
 
-if ($_SESSION['set']['ind'] == $_SESSION['set']['len']) {
+if ($set['setInd'] == $set['setLen']) {
 	unset($_SESSION['set']);
 }
 
