@@ -25,6 +25,8 @@ $sqlGetSet->execute();
 $set = $sqlGetSet->get_result()->fetch_assoc();
 $sqlGetSet->close();
 
+print_r($set);
+
 $set['setInd']++;
 
 $sqlUpdateSet = $conn->prepare("UPDATE sets SET setInd = ? WHERE id = ?");
