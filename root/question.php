@@ -34,6 +34,8 @@ $mysqlCredentials = json_decode(file_get_contents('../mysql-credentials.json'), 
 $conn = mysqli_connect($mysqlCredentials["host"], $mysqlCredentials["user"], $mysqlCredentials["password"], $mysqlCredentials["database"]);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+print_r($_SESSION);
+
 if (isset($_SESSION['set'])) {
 	$sqlGetSet = $conn->prepare("SELECT id, type, setInd, setLen, choiceLen, itemLen, itemBits, minTime, maxTime, confirmation FROM sets WHERE id = ?");
 	$sqlGetSet->bind_param(
