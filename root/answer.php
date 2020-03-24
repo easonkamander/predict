@@ -11,63 +11,68 @@ if (!isset($_SESSION['question']) || !isset($_POST['answer']) || !is_numeric($_P
 	return;
 }
 
-$_SESSION['set']['ind']++;
-
 $mysqlCredentials = json_decode(file_get_contents('../mysql-credentials.json'), true);
 
 $conn = mysqli_connect($mysqlCredentials["host"], $mysqlCredentials["user"], $mysqlCredentials["password"], $mysqlCredentials["database"]);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+$sqlGetSet = $conn->prepare("SELECT id, type, setInd, setLen FROM sets WHERE id = ?");
+$sqlGetSet->bind_param(
+	"i",
+	$_SESSION['set']
+);
+$sqlGetSet->execute();
+$set = $sqlGetSet->get_result()->fetch_assoc();
+$sqlGetSet->close();
+
+$set['setInd']++;
+
 $sqlUpdateSet = $conn->prepare("UPDATE sets SET setInd = ? WHERE id = ?");
 $sqlUpdateSet->bind_param(
 	"ii",
-	$_SESSION['set']['ind'],
-	$_SESSION['set']['id']
+	$set['setInd'],
+	$set['id']
 );
 $sqlUpdateSet->execute();
 $sqlUpdateSet->close();
 
-$sqlUpdateQuestion = $conn->prepare("UPDATE questions SET answer = ? WHERE setID = ? AND id = ?");
+$sqlGetQuestion = $conn->prepare("SELECT id, setInd, choiceLen, itemLen, itemBits, minTime, maxTime, confirmation, displayWidth FROM questions WHERE id = ?");
+$sqlGetQuestion->bind_param(
+	"i",
+	$_SESSION['question']
+);
+$sqlGetQuestion->execute();
+$question = $sqlGetQuestion->get_result()->fetch_assoc();
+$sqlGetQuestion->close();
+
+$sqlUpdateQuestion = $conn->prepare("UPDATE questions SET answer = ? WHERE id = ?");
 $sqlUpdateQuestion->bind_param(
-	"iii",
+	"ii",
 	$_POST['answer'],
-	$_SESSION['set']['id'],
-	$_SESSION['question']['id']
+	$question['id']
 );
 $sqlUpdateQuestion->execute();
 $sqlUpdateQuestion->close();
 
-$sqlGetPrediction = $conn->prepare("SELECT prediction FROM choices WHERE questionID = ? AND valid");
-$sqlGetPrediction->bind_param(
+$sqlGetChoices = $conn->prepare("SELECT display, prediction FROM choices WHERE questionID = ? AND valid");
+$sqlGetChoices->bind_param(
 	"i",
-	$_SESSION['question']['id']
+	$question['id']
 );
-$sqlGetPrediction->execute();
+$sqlGetChoices->execute();
+$choices = $sqlGetChoices->get_result()->fetch_all(MYSQLI_ASSOC);
+$sqlGetChoices->close();
 
-$sqlGetPredictionResult = $sqlGetPrediction->get_result();
-
-$choices = array();
-
-for ($i = 0; $i < count($_SESSION['question']['display']); $i++) {
-	array_push($choices, array(
-		'display' => $_SESSION['question']['display'][$i],
-		'prediction' => $sqlGetPredictionResult->fetch_assoc()['prediction'],
-		'actual' => false
-	));
-}
-
-$choices[$_POST['answer']]['actual'] = true;
-
-$sqlGetPrediction->close();
+// $choices[$_POST['answer']]['actual'] = true;
 
 $conn->close();
 
-$displayWidth = $_SESSION['question']['displayWidth'];
+$displayWidth = $question['displayWidth'];
 
 unset($_SESSION['question']);
 
-$setInd = $_SESSION['set']['ind'];
-$setLen = $_SESSION['set']['len'];
+$setInd = $set['setInd'];
+$setLen = $set['setLen'];
 
 if ($_SESSION['set']['ind'] == $_SESSION['set']['len']) {
 	unset($_SESSION['set']);

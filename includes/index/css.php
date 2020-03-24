@@ -12,7 +12,7 @@
 		margin: auto;
 	}
 	#aboutCardMedia {
-		background-image: url("https://miro.medium.com/max/1913/1*XqV6sGBRcVTkmWwUVxFHFw.jpeg");
+		/* background-image: url("https://miro.medium.com/max/1913/1*XqV6sGBRcVTkmWwUVxFHFw.jpeg"); */
 	}
 	#aboutCard .mdc-typography {
 		padding: 1rem 1rem 0rem 1rem;
