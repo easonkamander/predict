@@ -157,7 +157,7 @@ while ($uniqueChoices < $question['choiceLen']) {
 
 		$sqlUpdateChoice = $conn->prepare("UPDATE choices SET valid = TRUE, display = ? WHERE id = ?");
 		$sqlUpdateChoice->bind_param(
-			"i",
+			"ii",
 			$choice['display'],
 			$nextChoiceId
 		);
