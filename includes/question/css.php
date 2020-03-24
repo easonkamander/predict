@@ -76,7 +76,7 @@
 	}
 	.choicebox {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(<?php echo $_SESSION['question']['displayWidth']; ?>ch, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(<?php echo $question['displayWidth']; ?>ch, 1fr));
 		grid-gap: 1rem;
 		justify-items: stretch;
 		align-items: stretch;

@@ -6,12 +6,12 @@ if (!isset($_SESSION['user'])) {
 	return;
 }
 
-if (!isset($_SESSION['question']) || !isset($_POST['answer']) || !is_numeric($_POST['answer'])) {
+if (!isset($question) || !isset($_POST['answer']) || !is_numeric($_POST['answer'])) {
 	header('Location: question.php');
 	return;
 }
 
-$_SESSION['set']['ind']++;
+$set['ind']++;
 
 $mysqlCredentials = json_decode(file_get_contents('../mysql-credentials.json'), true);
 
@@ -21,8 +21,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $sqlUpdateSet = $conn->prepare("UPDATE sets SET setInd = ? WHERE id = ?");
 $sqlUpdateSet->bind_param(
 	"ii",
-	$_SESSION['set']['ind'],
-	$_SESSION['set']['id']
+	$set['ind'],
+	$set['id']
 );
 $sqlUpdateSet->execute();
 $sqlUpdateSet->close();
@@ -31,8 +31,8 @@ $sqlUpdateQuestion = $conn->prepare("UPDATE questions SET answer = ? WHERE setID
 $sqlUpdateQuestion->bind_param(
 	"iii",
 	$_POST['answer'],
-	$_SESSION['set']['id'],
-	$_SESSION['question']['id']
+	$set['id'],
+	$question['id']
 );
 $sqlUpdateQuestion->execute();
 $sqlUpdateQuestion->close();
@@ -40,7 +40,7 @@ $sqlUpdateQuestion->close();
 $sqlGetPrediction = $conn->prepare("SELECT prediction FROM choices WHERE questionID = ? AND valid");
 $sqlGetPrediction->bind_param(
 	"i",
-	$_SESSION['question']['id']
+	$question['id']
 );
 $sqlGetPrediction->execute();
 
@@ -48,9 +48,9 @@ $sqlGetPredictionResult = $sqlGetPrediction->get_result();
 
 $choices = array();
 
-for ($i = 0; $i < count($_SESSION['question']['display']); $i++) {
+for ($i = 0; $i < count($question['display']); $i++) {
 	array_push($choices, array(
-		'display' => $_SESSION['question']['display'][$i],
+		'display' => $question['display'][$i],
 		'prediction' => $sqlGetPredictionResult->fetch_assoc()['prediction'],
 		'actual' => false
 	));
@@ -62,15 +62,15 @@ $sqlGetPrediction->close();
 
 $conn->close();
 
-$displayWidth = $_SESSION['question']['displayWidth'];
+$displayWidth = $question['displayWidth'];
 
-unset($_SESSION['question']);
+unset($question);
 
-$setInd = $_SESSION['set']['ind'];
-$setLen = $_SESSION['set']['len'];
+$setInd = $set['ind'];
+$setLen = $set['len'];
 
-if ($_SESSION['set']['ind'] == $_SESSION['set']['len']) {
-	unset($_SESSION['set']);
+if ($set['ind'] == $set['len']) {
+	unset($set);
 }
 
 $pageName = 'answer';
