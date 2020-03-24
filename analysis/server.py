@@ -11,10 +11,11 @@ with SimpleXMLRPCServer(('localhost', 8000)) as server:
 		load.refresh()
 		batchX = load.getBatchX(setID, batchFill)
 		if batchX is not None:
+			print(batchX)
 			batchY = model.predict(batchX)
+			print(batchY)
 			load.setBatchY(setID, batchFill, batchY)
-		else:
-			print('It didnt find the batch')
+			print(setID, batchFill)
 	server.register_function(analyze, 'analyze')
 
 	server.serve_forever()
