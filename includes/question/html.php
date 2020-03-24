@@ -1,7 +1,7 @@
 <div id="waitCover"></div>
 <form action="answer.php" method="POST">
 	<div class="choicebox">
-<?php foreach ($question['display'] as $i => $line): ?>
+<?php foreach ($_SESSION['question']['display'] as $i => $line): ?>
 		<label class="choiceOuter" for="choice<?php echo $i; ?>">
 			<input type="submit" id="choice<?php echo $i; ?>" name="answer" value="<?php echo $i; ?>" />
 			<div class="choice mdc-button mdc-button">
