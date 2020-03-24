@@ -16,7 +16,7 @@ $mysqlCredentials = json_decode(file_get_contents('../mysql-credentials.json'), 
 $conn = mysqli_connect($mysqlCredentials["host"], $mysqlCredentials["user"], $mysqlCredentials["password"], $mysqlCredentials["database"]);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$sqlGetSet = $conn->prepare("SELECT id, type, setInd, setLen FROM sets WHERE id = ?");
+$sqlGetSet = $conn->prepare("SELECT id, setInd, setLen FROM sets WHERE id = ?");
 $sqlGetSet->bind_param(
 	"i",
 	$_SESSION['set']
@@ -28,6 +28,8 @@ $sqlGetSet->close();
 print_r($set);
 
 $set['setInd']++;
+
+print_r($set);
 
 $sqlUpdateSet = $conn->prepare("UPDATE sets SET setInd = ? WHERE id = ?");
 $sqlUpdateSet->bind_param(
