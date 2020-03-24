@@ -25,11 +25,7 @@ $sqlGetSet->execute();
 $set = $sqlGetSet->get_result()->fetch_assoc();
 $sqlGetSet->close();
 
-print_r($set);
-
 $set['setInd']++;
-
-print_r($set);
 
 $sqlUpdateSet = $conn->prepare("UPDATE sets SET setInd = ? WHERE id = ?");
 $sqlUpdateSet->bind_param(
@@ -74,9 +70,6 @@ $conn->close();
 $displayWidth = $question['displayWidth'];
 
 unset($_SESSION['question']);
-
-$setInd = $set['setInd'];
-$setLen = $set['setLen'];
 
 if ($set['setInd'] == $set['setLen']) {
 	unset($_SESSION['set']);

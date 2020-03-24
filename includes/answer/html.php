@@ -8,7 +8,7 @@
 
 <br />
 
-<?php if ($setInd == $setLen): ?>
+<?php if ($set['setInd'] == $set['setLen']): ?>
 <div class="forwardButtons">
 	<a href="question.php" class="mdc-button mdc-button--raised" id="nextsetButton" data-mdc-auto-init="MDCRipple">
 		<span class="mdc-button__ripple"></span>

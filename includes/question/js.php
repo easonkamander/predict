@@ -1,5 +1,5 @@
 <script>
-<?php if ($maxTime and $minTime): ?>
+<?php if ($question['maxTime'] and $question['minTime']): ?>
 	minTime = true;
 	document.querySelector('#mtime').addEventListener('animationend', function () {
 		if (minTime) {
@@ -12,14 +12,14 @@
 			location.reload();
 		}
 	});
-<?php elseif ($minTime): ?>
+<?php elseif ($question['minTime']): ?>
 	document.querySelector('#mtime').addEventListener('animationend', function () {
 		document.querySelector('#centerSection').removeChild(document.querySelector('#waitCover'));
 		Array.from(document.querySelectorAll('.choice')).map(function (a) {
 			a.classList.add('mdc-button--raised');
 		});
 	});
-<?php elseif ($maxTime): ?>
+<?php elseif ($question['maxTime']): ?>
 	document.querySelector('#centerSection').removeChild(document.querySelector('#waitCover'));
 	Array.from(document.querySelectorAll('.choice')).map(function (a) {
 		a.classList.add('mdc-button--raised');

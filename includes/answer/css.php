@@ -5,8 +5,8 @@
 		background-color: #AEAEAE;
 		border-top: 0.1rem solid #424242;
 		border-bottom: 0.1rem solid #424242;
-<?php if ($setLen > 1): ?>
-		grid-template-columns: 0 repeat(calc(<?php echo $setLen; ?> - 1), 4fr minmax(1em, 1fr)) 4fr 0;
+<?php if ($set['setLen'] > 1): ?>
+		grid-template-columns: 0 repeat(calc(<?php echo $set['setLen']; ?> - 1), 4fr minmax(1em, 1fr)) 4fr 0;
 <?php else: ?>
 		grid-template-columns: 0 4fr 0;
 <?php endif ?>
@@ -21,19 +21,19 @@
 		border-left: 0.1rem solid #424242;
 		border-right: 0.1rem solid #424242;
 	}
-	.spitem:nth-child(<?php echo 2 * $setInd; ?>) {
+	.spitem:nth-child(<?php echo 2 * $set['setInd']; ?>) {
 		background-size: 200% 100%;
 		background-image: linear-gradient(to right, transparent 50%, var(--mdc-theme-secondary) 50%);
 		background-position: 100% 0;
 		animation: slide 0.75s forwards;
 	}
-	.spborder:nth-child(<?php echo 2 * $setInd + 1; ?>) {
+	.spborder:nth-child(<?php echo 2 * $set['setInd'] + 1; ?>) {
 		background-size: 200% 100%;
 		background-image: linear-gradient(to right, var(--mdc-theme-secondary) 50%, var(--mdc-theme-primary) 50%);
 		background-position: 100% 0;
 		animation: slide 0.75s forwards;
 	}
-<?php if ($setInd == $setLen): ?>
+<?php if ($set['setInd'] == $set['setLen']): ?>
 	@keyframes compressBorder {
 		to {
 			margin: 0 50%;

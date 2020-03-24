@@ -31,9 +31,9 @@
 					<span class="mdc-top-app-bar__title">Predict - <?php echo $pageDisplay; ?></span>
 				</section>
 			</div>
-<?php if (isset($setLen)): ?>
+<?php if (isset($set['setLen'])): ?>
 			<div id="sp">
-				<?php echo str_repeat('<div class="spborder"></div><div class="spitem"></div>', $setLen) . '<div class="spborder"></div>'; ?>
+				<?php echo str_repeat('<div class="spborder"></div><div class="spitem"></div>', $set['setLen']) . '<div class="spborder"></div>'; ?>
 			</div>
 			<div id="mtime"></div>
 <?php endif ?>
