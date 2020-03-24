@@ -1,6 +1,6 @@
 <div class="choicebox">
 <?php foreach ($choices as $choice): ?>
-	<div class="choice" <?php if ($choice['actual']) {echo 'id="actual"';} ?> style="background-position: <?php echo 100*(1 - $choice['prediction']); ?>%;">
+	<div class="choice" style="background-position: <?php echo 100*(1 - $choice['prediction']); ?>%;">
 		<?php echo $choice['display']; ?>
 	</div>
 <?php endforeach ?>
