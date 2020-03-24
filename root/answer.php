@@ -63,8 +63,6 @@ $sqlGetChoices->execute();
 $choices = $sqlGetChoices->get_result()->fetch_all(MYSQLI_ASSOC);
 $sqlGetChoices->close();
 
-// $choices[$_POST['answer']]['actual'] = true;
-
 $conn->close();
 
 $displayWidth = $question['displayWidth'];
