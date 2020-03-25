@@ -116,10 +116,11 @@ $displayWidth = 0;
 $uniqueChoices = 0;
 
 while ($uniqueChoices < $question['choiceLen']) {
-	$sqlCreateChoice = $conn->prepare("INSERT INTO choices (questionID) VALUES (?)");
+	$sqlCreateChoice = $conn->prepare("INSERT INTO choices (questionID, choiceInd) VALUES (?, ?)");
 	$sqlCreateChoice->bind_param(
-		"i",
-		$question['id']
+		"ii",
+		$question['id'],
+		$uniqueChoices
 	);
 	$sqlCreateChoice->execute();
 	$nextChoiceId = $sqlCreateChoice->insert_id;
