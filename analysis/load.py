@@ -36,7 +36,7 @@ def getBatchX (setID, batchFill):
 	resSetLen = cursor.fetchone()[0]
 
 	for setInd in range(batchFill):
-		cursor.execute('SELECT timeStart, timeEnd, minTime, maxTime, confirmation, answer, id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, setInd))
+		cursor.execute('SELECT timeStart, timeEnd, minTime, maxTime, confirmation, answer, id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC LIMIT 1'.format(setID, setInd))
 		resMeta = cursor.fetchone()
 
 		if resMeta != None:
@@ -75,7 +75,7 @@ def getBatchX (setID, batchFill):
 def getBatchY (setID, batchFill):
 	out = np.full(shape=(1, MAX_CHOICES), fill_value=0.0)
 
-	cursor.execute('SELECT answer FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, batchFill - 1))
+	cursor.execute('SELECT answer FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC LIMIT 1'.format(setID, batchFill - 1))
 	answer = cursor.fetchone()[0]
 	if answer is not None:
 		out[0, answer] = 1.0
@@ -85,7 +85,7 @@ def getBatchY (setID, batchFill):
 def setBatchY (setID, batchFill, batchY):
 	print(setID, batchFill, batchY)
 
-	cursor.execute('SELECT id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, batchFill))
+	cursor.execute('SELECT id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC LIMIT 1'.format(setID, batchFill))
 	questionID = cursor.fetchone()[0]
 
 	print(questionID)
