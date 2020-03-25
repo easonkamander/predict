@@ -19,12 +19,16 @@ checkY = load.getBatchesY()[-TESTS:]
 # model.add(Dense(load.MAX_CHOICES, activation='sigmoid'))
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.LSTM(20, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES)))
-model.add(tf.keras.layers.Dense(100))
+model.add(tf.keras.layers.LSTM(200, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES), return_sequences=True))
 model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(50))
+model.add(tf.keras.layers.LSTM(200))
+model.add(tf.keras.layers.Dense(1000))
 model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(25))
+model.add(tf.keras.layers.Dense(500))
+model.add(tf.keras.layers.Dropout(0.2))
+model.add(tf.keras.layers.Dense(250))
+model.add(tf.keras.layers.Dropout(0.2))
+model.add(tf.keras.layers.Dense(250))
 model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='sigmoid'))
 
@@ -32,6 +36,6 @@ print(model.summary())
 
 model.compile(loss='mse', optimizer='adam')
 
-model.fit(trainX, trainY, epochs=2, validation_data=(checkX, checkY), shuffle=True)
+model.fit(trainX, trainY, epochs=300, validation_data=(checkX, checkY), shuffle=True)
 
 model.save('model.h5')

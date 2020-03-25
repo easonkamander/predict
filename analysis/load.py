@@ -24,9 +24,6 @@ conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-cr
 conn.autocommit = True
 cursor = conn.cursor()
 
-def refresh ():
-	conn.commit()
-
 def getBatchX (setID, batchFill):
 	out = np.full(shape=(1, MAX_QUESTIONS, TOTAL_FEATURES), fill_value=0.0)
 
@@ -83,16 +80,11 @@ def getBatchY (setID, batchFill):
 	return out
 
 def setBatchY (setID, batchFill, batchY):
-	print(setID, batchFill, batchY)
-
 	cursor.execute('SELECT id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC LIMIT 1'.format(setID, batchFill))
 	questionID = cursor.fetchone()[0]
 
-	print(questionID)
-
-	for i, j in enumerate(batchY):
-		print(i, j)
-		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND choiceInd = {2} AND valid'.format(j, questionID, i))
+	for ind, val in enumerate(batchY):
+		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND choiceInd = {2} AND valid'.format(val, questionID, ind))
 
 def getBatchesX ():
 	out = np.empty(shape=(0, MAX_QUESTIONS, TOTAL_FEATURES))
