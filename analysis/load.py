@@ -83,10 +83,15 @@ def getBatchY (setID, batchFill):
 	return out
 
 def setBatchY (setID, batchFill, batchY):
+	print(setID, batchFill, batchY)
+
 	cursor.execute('SELECT id FROM questions WHERE setID = {0} AND setInd = {1} ORDER BY id DESC'.format(setID, batchFill))
 	questionID = cursor.fetchone()[0]
 
+	print(questionID)
+
 	for i, j in enumerate(batchY):
+		print(i, j)
 		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND valid LIMIT {2}, 1'.format(j, questionID, i))
 
 def getBatchesX ():
