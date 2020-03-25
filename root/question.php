@@ -181,11 +181,11 @@ $conn->close();
 
 // trigger prediction request
 
-file_get_contents('http://localhost:8000/', false, stream_context_create(array('http' => array(
+print_r(file_get_contents('http://localhost:8000/', false, stream_context_create(array('http' => array(
 	'method' => 'POST',
 	'header' => 'Content-Type: text/xml',
 	'content' => xmlrpc_encode_request('analyze', array($set['id'], $set['setInd']))
-))));
+)))));
 
 $pageName = 'question';
 $pageDisplay = 'Question';
