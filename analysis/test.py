@@ -1,6 +1,7 @@
 import numpy as np
 import threading
 import load
+import time
 import tensorflow as tf
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
@@ -8,6 +9,7 @@ from xmlrpc.server import SimpleXMLRPCRequestHandler
 model = tf.keras.models.load_model('model.h5')
 
 def analysisProcess (setID, batchFill):
+	time.sleep(3)
 	batchX = load.getBatchX(setID, batchFill)
 	if batchX is not None:
 		batchY = model.predict(batchX)[0]
