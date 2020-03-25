@@ -8,7 +8,7 @@ model = tf.keras.models.load_model('model.h5')
 
 with SimpleXMLRPCServer(('localhost', 8000)) as server:
 	def analyze (setID, batchFill):
-		load.refresh()
+		# load.refresh()
 		batchX = load.getBatchX(setID, batchFill)
 		print(batchX)
 		if batchX is not None:
