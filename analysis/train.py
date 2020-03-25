@@ -30,7 +30,7 @@ model.add(tf.keras.layers.Dense(250))
 model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(250))
 model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='tanh'))
 
 print(model.summary())
 
