@@ -11,7 +11,7 @@ with SimpleXMLRPCServer(('localhost', 8000)) as server:
 		load.refresh()
 		batchX = load.getBatchX(setID, batchFill)
 		if batchX is not None:
-			batchY = model.predict(batchX)
+			batchY = model.predict(batchX)[0]
 			load.setBatchY(setID, batchFill, batchY)
 	server.register_function(analyze, 'analyze')
 
