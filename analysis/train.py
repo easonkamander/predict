@@ -2,7 +2,7 @@ import numpy as np
 import load
 import tensorflow as tf
 
-TESTS = 3
+TESTS = 2
 
 trainX = load.getBatchesX()[:-TESTS]
 trainY = load.getBatchesY()[:-TESTS]
@@ -21,16 +21,19 @@ checkY = load.getBatchesY()[-TESTS:]
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.LSTM(200, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES), return_sequences=True))
 model.add(tf.keras.layers.Dropout(0.2))
+model.add(tf.keras.layers.Dense(400))
+model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.LSTM(200))
+model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(1000))
 model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(500))
 model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(250))
 model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(250))
+model.add(tf.keras.layers.Dense(200))
 model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='tanh'))
+model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='sigmoid'))
 
 print(model.summary())
 
