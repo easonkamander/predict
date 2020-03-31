@@ -84,7 +84,8 @@ def setBatchY (setID, batchFill, batchY):
 	questionID = cursor.fetchone()[0]
 
 	for ind, val in enumerate(batchY):
-		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND choiceInd = {2} AND valid'.format(val, questionID, ind))
+		print(val)
+		cursor.execute('UPDATE choices SET prediction = {0} WHERE questionID = {1} AND choiceInd = {2} AND valid'.format(max(0.0, val), questionID, ind))
 
 def getBatchesX ():
 	out = np.empty(shape=(0, MAX_QUESTIONS, TOTAL_FEATURES))
