@@ -1,3 +1,4 @@
+#!/usr/bin/python -u
 import numpy as np
 import threading
 import load
