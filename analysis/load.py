@@ -20,8 +20,6 @@ MAX_TIME = 8
 META_FEATURES = 6
 TOTAL_FEATURES = META_FEATURES + MAX_CHOICES * (MAX_ITEMS + 1)
 
-print('abc')
-
 conn = mysql.connector.connect(**json.load(open(os.path.join(location, 'mysql-credentials.json'))))
 conn.autocommit = True
 cursor = conn.cursor()
