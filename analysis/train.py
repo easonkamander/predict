@@ -1,7 +1,7 @@
 import numpy as np
 import load
 import random
-import tensorflow as tf
+import os
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import LSTM, Dropout, Dense
 
@@ -44,4 +44,4 @@ model.compile(loss='rmse', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=100, validation_data=(checkX, checkY), shuffle=True)
 
-model.save('model.h5')
+model.save(os.path.join(load.location,'models', 'main.h5'))

@@ -79,7 +79,7 @@ if (isset($_SESSION['set'])) {
 	$_SESSION['set'] = $set['id'];
 }
 
-file_get_contents('http://localhost:8000/', false, stream_context_create(array('http' => array(
+file_get_contents('http://localhost:8031/', false, stream_context_create(array('http' => array(
 	'method' => 'POST',
 	'header' => 'Content-Type: text/xml',
 	'content' => xmlrpc_encode_request('analysisRequest', array($set['id'], $set['setInd']))

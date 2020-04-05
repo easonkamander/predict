@@ -2,17 +2,18 @@ import numpy as np
 import threading
 import load
 import time
-import tensorflow as tf
+import os
+from tensorflow.keras.models import load_model
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-model = tf.keras.models.load_model('model.h5')
+model = load_model(os.path.join(load.location,'models', 'main.h5'))
 
 def analysisProcess (setID, batchFill):
 	batchX = load.getBatchX(setID, batchFill)
 	tstart = time.time()
 	while batchX is None and time.time() - tstart < 3:
-		print('Not There Yet, Lets Try Again')
+		print('Not There Yet, Try Again')
 		time.sleep(0.2)
 		batchX = load.getBatchX(setID, batchFill)
 	if batchX is not None:
@@ -21,7 +22,7 @@ def analysisProcess (setID, batchFill):
 	else:
 		print('Need To Increase Max Time')
 
-with SimpleXMLRPCServer(('localhost', 8000)) as server:
+with SimpleXMLRPCServer(('localhost', 8031)) as server:
 	def analysisRequest (setID, batchFill):
 		analysisThread = threading.Thread(target=analysisProcess, args=(setID, batchFill))
 		analysisThread.start()
