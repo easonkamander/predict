@@ -1,43 +1,46 @@
 import numpy as np
 import load
+import random
 import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import LSTM, Dropout, Dense
 
-TESTS = 2
+trainX = load.getBatchesX()
+trainY = load.getBatchesY()
 
-trainX = load.getBatchesX()[:-TESTS]
-trainY = load.getBatchesY()[:-TESTS]
-checkX = load.getBatchesX()[-TESTS:]
-checkY = load.getBatchesY()[-TESTS:]
+tests = random.sample(range(len(trainX)), 2)
 
-# model = Sequential()
-# model.add(LSTM(load.MAX_CHOICES*8, input_shape=(load.TIMESTEPS, load.FEATURES), return_sequences=True))
-# model.add(Dropout(0.2))
-# model.add(LSTM(64))
-# model.add(Dropout(0.2))
-# model.add(Dense(16))
-# model.add(Dropout(0.2))
-# model.add(Dense(load.MAX_CHOICES, activation='sigmoid'))
+checkX = trainX[tests]
+checkY = trainY[tests]
 
-model = tf.keras.Sequential()
-model.add(tf.keras.layers.LSTM(150, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES), return_sequences=True))
-model.add(tf.keras.layers.Dropout(0.15))
-model.add(tf.keras.layers.Dense(150))
-model.add(tf.keras.layers.Dropout(0.15))
-model.add(tf.keras.layers.LSTM(120))
-model.add(tf.keras.layers.Dropout(0.15))
-model.add(tf.keras.layers.Dense(800))
-model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(600))
-model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(400))
-model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(200))
-model.add(tf.keras.layers.Dropout(0.2))
-model.add(tf.keras.layers.Dense(load.MAX_CHOICES, activation='sigmoid'))
+trainX = np.delete(trainX, tests, 0)
+trainY = np.delete(trainY, tests, 0)
+
+print(trainX.shape)
+print(trainY.shape)
+print(checkX.shape)
+print(checkY.shape)
+
+model = Sequential()
+model.add(LSTM(150, input_shape=(load.MAX_QUESTIONS, load.TOTAL_FEATURES), return_sequences=True))
+model.add(Dropout(0.15))
+model.add(Dense(150))
+model.add(Dropout(0.15))
+model.add(LSTM(120))
+model.add(Dropout(0.15))
+model.add(Dense(800))
+model.add(Dropout(0.2))
+model.add(Dense(600))
+model.add(Dropout(0.2))
+model.add(Dense(400))
+model.add(Dropout(0.2))
+model.add(Dense(200))
+model.add(Dropout(0.2))
+model.add(Dense(load.MAX_CHOICES, activation='softmax'))
 
 print(model.summary())
 
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='rmse', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=100, validation_data=(checkX, checkY), shuffle=True)
 

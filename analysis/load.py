@@ -12,6 +12,8 @@ location = os.path.realpath(
 	)
 )
 
+print(location)
+
 MAX_QUESTIONS = 12
 MAX_CHOICES = 8
 MAX_ITEMS = 1
