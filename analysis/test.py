@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-model = load_model(os.path.join(load.location,'models', 'main.h5'))
+model = load_model(os.path.join(load.location, 'models', 'main.h5'))
 
 def analysisProcess (setID, batchFill):
 	batchX = load.getBatchX(setID, batchFill)
