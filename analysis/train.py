@@ -40,7 +40,7 @@ model.add(Dense(load.MAX_CHOICES, activation='softmax'))
 
 print(model.summary())
 
-model.compile(loss='rmse', optimizer='adam')
+model.compile(loss='mse', optimizer='adam')
 
 model.fit(trainX, trainY, epochs=100, validation_data=(checkX, checkY), shuffle=True)
 
