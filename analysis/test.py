@@ -14,14 +14,11 @@ def analysisProcess (setID, batchFill):
 	batchX = load.getBatchX(setID, batchFill)
 	tstart = time.time()
 	while batchX is None and time.time() - tstart < 3:
-		print('Not There Yet, Try Again')
-		time.sleep(0.2)
+		time.sleep(0.5)
 		batchX = load.getBatchX(setID, batchFill)
 	if batchX is not None:
 		batchY = model.predict(batchX)[0]
 		load.setBatchY(setID, batchFill, batchY)
-	else:
-		print('Need To Increase Max Time')
 
 with SimpleXMLRPCServer(('localhost', 8031)) as server:
 	def analysisRequest (setID, batchFill):
