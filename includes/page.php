@@ -4,7 +4,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
 		<title><?php echo $pageDisplay; ?> - Predict</title>
-		<link rel="stylesheet" href="lib/mdc.min.css" defer async>
 		<style>
 			body {
 				margin: 0;
@@ -21,6 +20,7 @@
 				background-color: transparent;
 			}
 		</style>
+		<link rel="stylesheet" href="lib/mdc.min.css">
 <?php file_exists('../includes/'.$pageName.'/css.php') AND include($pageName.'/css.php'); ?>
 	</head>
 	<body>
