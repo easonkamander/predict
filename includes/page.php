@@ -58,14 +58,15 @@
 <?php require_once($pageName.'/html.php'); ?>
 			</div>
 		</div>
+		<script src="lib/mdc.min.js"></script>
 		<script>
+			mdc.autoInit();
 			document.querySelector('.mdc-top-app-bar--fixed-adjust').style.paddingTop = document.querySelector('header.mdc-top-app-bar').offsetHeight + 'px';
 			document.querySelector('.mdc-top-app-bar__navigation-icon').addEventListener('click', function () {
 				document.querySelector('.mdc-drawer').MDCDrawer.open = !document.querySelector('.mdc-drawer').MDCDrawer.open;
 			});
 			document.querySelector('#inlineScrim').style.background = 'linear-gradient(transparent 0%, transparent '+document.querySelector('header.mdc-top-app-bar').offsetHeight+'px, rgb(0, 0, 0, 0.64) '+document.querySelector('header.mdc-top-app-bar').offsetHeight+'px, rgb(0, 0, 0, 0.64) 100%)';
 		</script>
-		<script src="lib/mdc.min.js"></script>
 <?php file_exists('../includes/'.$pageName.'/js.php') AND include($pageName.'/js.php'); ?>
 	</body>
 </html>
