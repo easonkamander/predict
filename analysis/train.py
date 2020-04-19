@@ -44,6 +44,6 @@ print(model.summary())
 
 model.compile(loss='mse', optimizer='adam')
 
-model.fit(trainX, trainY, epochs=150, validation_data=(checkX, checkY), shuffle=True)
+model.fit(trainX, trainY, epochs=50, validation_data=(checkX, checkY), shuffle=True)
 
 model.save(os.path.join(load.location, 'models', 'main.h5'))
